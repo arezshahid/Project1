@@ -1,8 +1,67 @@
 <!DOCTYPE html>
-
+<html>
   <head>
-    <title> Project 1 Calculator </title>
-    
+    <title>Project 1 Calculator</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
   </head>
+  <body>
+    <div class="flex-container">
+      <div class="calculator">
+        <div class="heading">Calculator</div>
+        <input type="text" id="display" name="display" />
+        <div class="buttons">
+          <button class="brackets-open">&#40;</button>
+          <button class="brackets-open">&#41;</button>
+          <button class="clear zero">C</button>
+          <button class="function">sin</button>
+          <button class="function">tan</button>
+          <button class="function">cos</button>
+          <button class="function">sqrt</button>
+          <button class="num">7</button>
+          <button class="num">8</button>
+          <button class="num">9</button>
+          <button class="operator">+</button>
+          <button class="num">4</button>
+          <button class="num">5</button>
+          <button class="num">6</button>
+          <button class="operator">−</button>
+          <button class="num">1</button>
+          <button class="num">2</button>
+          <button class="num">3</button>
+          <button class="operator">×</button>
+          <button class="zero">0</button>
+          <button>.</button>
+          <button class="operator">÷</button>
 
+          <button class="operator equals zero">=</button>
+          <button class="delete">del</button>
+          <button class="exp operator">^</button>
+        </div>
+      </div>
+
+      <div class="var-result-container">
+        <div class="variable-container">
+          <div class="heading">Variables</div>
+          <div class="variable-info">
+            <span class="var-name"
+              ><input type="text" id="var-name-field" name="var-name-field"
+            /></span>
+            <span class="var-value"
+              ><input type="text" id="var-value-field" name="var-value-field"
+            /></span>
+            <span class="var-add">
+              <button class="var-add-btn">Add Variable</button>
+            </span>
+          </div>
+        </div>
+
+        <div class="result-container">
+          <div class="heading">Result</div>
+          <div class="result-output">21</div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
 </html>
