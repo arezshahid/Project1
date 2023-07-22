@@ -8,34 +8,60 @@
     <div class="flex-container">
       <div class="calculator">
         <div class="heading">Calculator</div>
-        <input type="text" id="display" name="display" />
+        <input
+          type="text"
+          id="expression"
+          name="expression"
+          placeholder="Expression"
+        />
         <div class="buttons">
-          <button class="brackets-open">&#40;</button>
-          <button class="brackets-open">&#41;</button>
-          <button class="clear zero">C</button>
-          <button class="function">sin</button>
-          <button class="function">tan</button>
-          <button class="function">cos</button>
-          <button class="function">sqrt</button>
-          <button class="num">7</button>
-          <button class="num">8</button>
-          <button class="num">9</button>
-          <button class="operator">+</button>
-          <button class="num">4</button>
-          <button class="num">5</button>
-          <button class="num">6</button>
-          <button class="operator">−</button>
-          <button class="num">1</button>
-          <button class="num">2</button>
-          <button class="num">3</button>
-          <button class="operator">×</button>
-          <button class="zero">0</button>
-          <button>.</button>
-          <button class="operator">÷</button>
-
-          <button class="operator equals zero">=</button>
-          <button class="delete">del</button>
-          <button class="exp operator">^</button>
+          <button
+            id="btn"
+            class="brackets-open"
+            onclick="logic.onNumClick('(')"
+          >
+            &#40;
+          </button>
+          <button class="brackets-open" onclick="logic.onNumClick(')')">
+            &#41;
+          </button>
+          <button class="clear" onclick="logic.onClearClick()">C</button>
+          <button class="function" onclick="logic.onNumClick('sin')">
+            sin
+          </button>
+          <button class="function" onclick="logic.onNumClick('tan')">
+            tan
+          </button>
+          <button class="function" onclick="logic.onNumClick('cos')">
+            cos
+          </button>
+          <button class="function" onclick="logic.onNumClick('sqrt')">
+            sqrt
+          </button>
+          <button id="btn" class="num" onclick="logic.onNumClick(7)">7</button>
+          <button class="num" onclick="logic.onNumClick(8)">8</button>
+          <button class="num" onclick="logic.onNumClick(9)">9</button>
+          <button class="operator" onclick="logic.onNumClick('+')">+</button>
+          <button class="num" onclick="logic.onNumClick(4)">4</button>
+          <button class="num" onclick="logic.onNumClick(5)">5</button>
+          <button class="num" onclick="logic.onNumClick(6)">6</button>
+          <button class="operator" onclick="logic.onNumClick('-')">−</button>
+          <button class="num" onclick="logic.onNumClick(1)">1</button>
+          <button class="num" onclick="logic.onNumClick(2)">2</button>
+          <button class="num" onclick="logic.onNumClick(3)">3</button>
+          <button class="operator" onclick="logic.onNumClick('*')">×</button>
+          <button class="zero" onclick="logic.onNumClick(0)">0</button>
+          <button class="pi" onclick="logic.onNumClick('π')">π</button>
+          <button class="point" onclick="logic.onNumClick('.')">.</button>
+          <button class="operator" onclick="logic.onNumClick('/')">÷</button>
+          <button class="operator equals" onclick="logic.onEqualClick()">
+            =
+          </button>
+          <button class="e" onclick="logic.onNumClick(2.7182)">e</button>
+          <button class="delete" onclick="logic.onDelClick()">del</button>
+          <button class="exp operator" onclick="logic.onNumClick('^')">
+            ^
+          </button>
         </div>
       </div>
 
@@ -44,24 +70,38 @@
           <div class="heading">Variables</div>
           <div class="variable-info">
             <span class="var-name"
-              ><input type="text" id="var-name-field" name="var-name-field"
+              ><input
+                type="text"
+                id="var-name-field"
+                name="var-name-field"
+                placeholder="Name"
             /></span>
             <span class="var-value"
-              ><input type="text" id="var-value-field" name="var-value-field"
+              ><input
+                type="text"
+                id="var-value-field"
+                name="var-value-field"
+                placeholder="Value"
             /></span>
             <span class="var-add">
-              <button class="var-add-btn">Add Variable</button>
+              <button class="var-add-btn" onclick="logic.addVariable()">
+                Add Variable
+              </button>
             </span>
           </div>
+          <div class="variable-stored"></div>
         </div>
 
         <div class="result-container">
           <div class="heading">Result</div>
-          <div class="result-output">21</div>
+          <input type="text" id="result-output" name="result-output" readonly />
         </div>
       </div>
     </div>
 
-    <script src="script.js"></script>
+    <script type="module">
+      import * as logic from "./js/index.js";
+      window.logic = logic;
+    </script>
   </body>
 </html>
