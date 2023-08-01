@@ -19,7 +19,6 @@ function addVariable () {
     };
     variableField[0].appendChild(btn);
     variables[variableName.value]=variableValue.value;
-    console.log(Object.entries(variables));
   }
 
   variableName.value="";
