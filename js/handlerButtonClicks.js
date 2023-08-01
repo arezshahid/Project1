@@ -1,8 +1,8 @@
-import {variables,cmpString,cmpTrigonometry,convertTrigonometryfunc,tokenizeAndConvertExpression} from './expression.js';
+import {variables,compareCalculatorConstants,compareCalculatorFunctions,convertCalculatorFunctions,tokenizeAndConvertExpression} from './expression.js';
 
 function onNumClick (num) {
     const expression = document.getElementById('expression');
-    let startPos = expression.selectionStart;
+    let cursorStartPosition = expression.selectionStart;
 
     if (expression.value[0]==0) {
         if (num!=0) {
@@ -10,12 +10,11 @@ function onNumClick (num) {
         }
     }
     else{
-        expression.value=expression.value.slice(0,startPos)+num+expression.value.slice(startPos);
-        console.log(expression.value)
+        expression.value=expression.value.slice(0,cursorStartPosition)+num+expression.value.slice(cursorStartPosition);
     }
 
     expression.focus();
-    expression.setSelectionRange(startPos+String(num).length, startPos+String(num).length);
+    expression.setSelectionRange(cursorStartPosition+String(num).length, cursorStartPosition+String(num).length);
 }
 
 function onClearClick() {
@@ -38,7 +37,6 @@ function onEqualClick() {
         result.value='Cannot divide by 0';
     }
     else{
-        console.log(expression);
         try {
             const answer = eval(expression);
             if (answer==undefined) {

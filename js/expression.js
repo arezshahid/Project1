@@ -1,68 +1,56 @@
 import { variables } from "./variable.js";
 
-function convertExponent(x, expression) {
-  if(x.includes('^'))
+function convertExponent(expressionToken, expression) {
+  if(expressionToken.includes('^'))
   {
-    console.log(x);
-    let index = x.indexOf('^');
-    let leftNum = x.slice(0,index);
-    if(cmpTrigonometry(leftNum))
-    {
-      leftNum=convertTrigonometryfunc(leftNum);
-    }
-    else if(isNaN(leftNum) && !cmpString(leftNum))
-    {
-      leftNum=variables[leftNum];
-    }
-    let rightNum = x.slice(index+1);
-    if(cmpTrigonometry(rightNum))
-    {
-      rightNum=convertTrigonometryfunc(rightNum);
-    }
-    else if(isNaN(rightNum) && !cmpString(rightNum))
-    {
-      rightNum=variables[rightNum];
-    }
-    let powerExpression = 'Math.pow(' + leftNum + ',' + rightNum + ')';
-    expression = expression.replace(x,powerExpression);
+    expression=expression.replace('^','**');
   }
   return expression;
 }
 
-function cmpString (x) {
-  if ('Math.sin'.toUpperCase()===x.toUpperCase() || 'Math.cos'.toUpperCase()===x.toUpperCase() || 'Math.tan'.toUpperCase()===x.toUpperCase() || 'Math.PI'.toUpperCase()===x.toUpperCase() || 'Math.E'.toUpperCase()===x.toUpperCase()) {
+function compareCalculatorConstants (expressionToken) {
+  if ('Math.sin'.toUpperCase()===expressionToken.toUpperCase() || 
+      'Math.cos'.toUpperCase()===expressionToken.toUpperCase() || 
+      'Math.tan'.toUpperCase()===expressionToken.toUpperCase() || 
+      'Math.PI'.toUpperCase()===expressionToken.toUpperCase() || 
+      'Math.E'.toUpperCase()===expressionToken.toUpperCase()) 
+      {
     return true;
   }
   return false;
 }
 
-function cmpTrigonometry (x) {
-  if (x=='sin' || x=='cos' || x=='tan' || x=='sqrt' || x=='π')
+function compareCalculatorFunctions (expressionToken) {
+  if (expressionToken=='sin' || 
+      expressionToken=='cos' || 
+      expressionToken=='tan' || 
+      expressionToken=='sqrt' || 
+      expressionToken=='π')
   {
     return true;
   }
   return false;
 }
 
-function convertTrigonometryfunc(x)
+function convertCalculatorFunctions(expressionToken)
 {
-  if(x=='sin')
+  if(expressionToken=='sin')
   {
     return 'Math.sin';
   }
-  else if(x=='cos')
+  else if(expressionToken=='cos')
   {
     return 'Math.cos';
   }
-  else if (x=='tan')
+  else if (expressionToken=='tan')
   {
     return 'Math.tan';
   }
-  else if (x=='sqrt')
+  else if (expressionToken=='sqrt')
   {
     return 'Math.sqrt';
   }
-  else if (x=="π")
+  else if (expressionToken=="π")
   {
     return 'Math.PI';
   }
@@ -72,38 +60,37 @@ function convertTrigonometryfunc(x)
 function tokenizeAndConvertExpression()
 {
   var expression = document.getElementById('expression').value;
-  let temp="";
-  let arr=[];
+  let temporaryExpression="";
+  let expressionTokensArray=[];
   for(let i=0;i<expression.length;i++){
-    if(!expression[i].match(/^[0-9a-zA-Z.π^]+$/)){
-      arr.push(temp);
-      temp="";
+    if(!expression[i].match(/^[0-9a-zA-Z.π]+$/)){
+      if(expression[i]=='^')
+      {
+        expressionTokensArray.push(expression[i]);
+      }
+      expressionTokensArray.push(temporaryExpression);
+      temporaryExpression="";
     }
     else
     {
-      temp+=expression[i];
+      temporaryExpression+=expression[i];
     }
   }
-  arr.push(temp);
-  console.log(arr);
-  for(let i=0;i<arr.length;i++)
+  expressionTokensArray.push(temporaryExpression);
+  console.log(expressionTokensArray);
+  for(let i=0;i<expressionTokensArray.length;i++)
   {
-    expression = convertExponent(arr[i], expression);
-    if(cmpTrigonometry(arr[i]))
+    expression = convertExponent(expressionTokensArray[i], expression);
+    if(compareCalculatorFunctions(expressionTokensArray[i]))
     {
-      console.log(expression);
-      expression=expression.replace(arr[i],convertTrigonometryfunc(arr[i]));
-      console.log(expression);
+      expression=expression.replace(expressionTokensArray[i],convertCalculatorFunctions(expressionTokensArray[i]));
     }
-    else if(isNaN(arr[i]) && !cmpString(arr[i]))
+    else if(isNaN(expressionTokensArray[i]) && !compareCalculatorConstants(expressionTokensArray[i]))
     {
-      console.log(expression);
-      expression=expression.replace(arr[i],variables[arr[i]]);
-      console.log(expression);
+      expression=expression.replace(expressionTokensArray[i],variables[expressionTokensArray[i]]);
     }
   }
-  console.log(expression)
   return expression;
 }
 
-export {variables,cmpString,cmpTrigonometry,convertTrigonometryfunc,tokenizeAndConvertExpression};
+export {variables,compareCalculatorConstants,compareCalculatorFunctions,convertCalculatorFunctions,tokenizeAndConvertExpression};
